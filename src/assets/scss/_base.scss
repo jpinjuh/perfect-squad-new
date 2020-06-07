@@ -1,0 +1,29 @@
+$primaryColor: #232323;
+$secondaryColor: #ebebeb;
+$accentColor: #f09e00;
+$iconColor: #b7b7b7;
+$playerNameColor: #292929; // color in player details modal
+$playerDetailsText: #434343; // player info color in player details modal
+$playerPositionColor: #000000;
+$progressBar: #21723a;
+
+$headerHeight: 40px;
+
+$viewWidthLg: 1170px;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial;
+  color: $primaryColor;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
