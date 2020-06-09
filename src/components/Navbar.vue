@@ -10,8 +10,8 @@
         </a>
       </div>
       <ul class="navbar-links" :class="{ navToggle: dropdownToggle }">
-        <router-link tag="li" to="/"><a>Players</a></router-link>
-        <router-link tag="li" to="/favorites"><a>Favorites</a></router-link>
+        <router-link tag="li" to="/"><a @click="closePopup()">Players</a></router-link>
+        <router-link tag="li" to="/favorites"><a @click="closePopup()">Favorites</a></router-link>
         <div>
           <CustomSelect
             name="formations"
@@ -44,6 +44,11 @@ export default {
       if (this.$route.path !== "/favorites") {
         this.$router.push("/favorites");
       }
+
+      this.closePopup();
+    },
+    closePopup() {
+      this.$store.dispatch("notFavoriteSelected");
     }
   }
 };

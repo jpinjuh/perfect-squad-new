@@ -4,6 +4,7 @@
       <div class="modal-mask">
         <div class="modal-wrapper" @click="$emit('close')">
           <div class="modal-container player-details" @click.stop>
+            <div class="close-modal-btn" @click="$emit('close')"><span>x</span></div>
             <div class="player-details-info">
               <div>
                 <div class="player-header-title">
@@ -16,9 +17,7 @@
                     >{{ stats.position }}</span
                   >
                 </div>
-                <span style="font-size: 26px; color: #d2d20f"
-                  >&#9733; &#9733; &#9733; &#9733; &#9733;</span
-                >
+                <StarRating />
               </div>
 
               <div>
@@ -83,27 +82,29 @@
               </div>
             </div>
             <div class="player-details-skills">
-              <div v-for="(skill, i) in playerSkills" :key="i">
-                <div class="player-skill-title">
-                  {{ skill.name | capitalize }}
-                </div>
-                <div class="player-skill">
-                  <div
-                    class="player-skill-list"
-                    v-for="(oneSkill, i) in skill.skills"
-                    :key="i"
-                  >
-                    <label class="player-skill-name" for="skill">{{
-                      oneSkill.name | capitalize
-                    }}</label>
-                    <progress
-                      class="player-skill-progress"
-                      v-if="oneSkill.value"
-                      id="skill"
-                      :value="oneSkill.value"
-                      max="100"
-                    ></progress>
-                    <span class="player-skill-value">{{ oneSkill.value }}</span>
+              <div class="player-details-skills-container">
+                <div v-for="(skill, i) in playerSkills" :key="i">
+                  <div class="player-skill-title">
+                    {{ skill.name | capitalize }}
+                  </div>
+                  <div class="player-skill">
+                    <div
+                      class="player-skill-list"
+                      v-for="(oneSkill, i) in skill.skills"
+                      :key="i"
+                    >
+                      <label class="player-skill-name" for="skill">{{
+                        oneSkill.name | capitalize
+                      }}</label>
+                      <progress
+                        class="player-skill-progress"
+                        v-if="oneSkill.value"
+                        id="skill"
+                        :value="oneSkill.value"
+                        max="100"
+                      ></progress>
+                      <span class="player-skill-value">{{ oneSkill.value }}</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -116,6 +117,7 @@
 </template>
 
 <script>
+import StarRating from "@/components/StarRating.vue";
 export default {
   props: {
     id: {
@@ -126,6 +128,9 @@ export default {
       type: String,
       required: true
     }
+  },
+  components: {
+    StarRating
   },
   data: () => ({
     player: {},
@@ -151,3 +156,16 @@ export default {
   }
 };
 </script>
+<style scoped>
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #b7b7b7;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color:#21723a;
+}
+</style>

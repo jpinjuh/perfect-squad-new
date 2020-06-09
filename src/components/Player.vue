@@ -1,11 +1,11 @@
 <template>
-  <div class="player-container">
+  <div class="player-container" @click.stop>
     <div class="player-panel">
       <div class="panel-header panel-header-aside heart">&#10084;</div>
       <div class="panel-header panel-header-main" @click="toggleContent()">
         {{ player.name }} {{ player.lastName }}
       </div>
-      <div class="panel-header panel-header-aside" :style="{ color: color }">
+      <div class="panel-header panel-header-aside" :style="{ color: color || '' }">
         {{ player.stats.position }}
       </div>
     </div>
@@ -42,7 +42,6 @@ export default {
     },
     color: {
       type: String,
-      required: true
     }
   },
   components: {
