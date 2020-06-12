@@ -8,7 +8,7 @@
             { 'heart-clickable': $route.path === '/favorites' },
             'heart'
           ]"
-          :style="{ color: !!favorite ? 'red' : '' }"
+          :style="{ color: !!favorite ? '#b84242' : '' }"
           icon="heart"
         />
       </div>
