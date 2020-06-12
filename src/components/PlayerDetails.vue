@@ -65,9 +65,7 @@
 
               <div class="info-container">
                 <span>Popularity</span>
-                <span class="player-data">{{
-                  calculatePopularity(player.rating)
-                }}</span>
+                <span class="player-data">{{ calculatePopularity }}</span>
               </div>
 
               <div class="info-container">
@@ -146,18 +144,22 @@ export default {
   data: () => ({
     player: {},
     stats: {},
-    playerSkills: {}
+    playerSkills: {},
+    rating: 0
   }),
+  computed: {
+    calculatePopularity() {
+      const popularity = (this.rating / 5) * 100;
+      return `${popularity}%`;
+    }
+  },
   methods: {
     bgImg(link) {
       return `background-image: url(${link});`;
     },
     updateRating(rating, playerId) {
+      this.rating = rating;
       this.$store.dispatch("updatePlayerRating", { rating, playerId });
-    },
-    calculatePopularity(rating) {
-      const popularity = (rating / 5) * 100;
-      return `${popularity}%`;
     }
   },
   filters: {
@@ -171,11 +173,13 @@ export default {
     this.player = this.$store.getters.getPlayer(this.id);
     this.stats = this.player.stats;
     this.playerSkills = this.player.playerSkills;
+    this.rating = this.player.rating;
   }
 };
 </script>
 <style lang="scss" scoped>
 @import "@/assets/scss/_base";
+// custom scrollbar for player skills container
 ::-webkit-scrollbar {
   width: 6px;
 }

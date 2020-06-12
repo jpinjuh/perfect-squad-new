@@ -1,45 +1,16 @@
 <template>
   <div class="star-rating">
-    <input
-      type="radio"
-      id="5-stars"
-      name="rating"
-      v-model="localValue"
-      value="5"
-    />
-    <label for="5-stars">&#9733;</label>
-    <input
-      type="radio"
-      id="4-stars"
-      name="rating"
-      v-model="localValue"
-      value="4"
-    />
-    <label for="4-stars">&#9733;</label>
-    <input
-      type="radio"
-      id="3-stars"
-      name="rating"
-      v-model="localValue"
-      value="3"
-    />
-    <label for="3-stars">&#9733;</label>
-    <input
-      type="radio"
-      id="2-stars"
-      name="rating"
-      v-model="localValue"
-      value="2"
-    />
-    <label for="2-stars">&#9733;</label>
-    <input
-      type="radio"
-      id="1-star"
-      name="rating"
-      v-model="localValue"
-      value="1"
-    />
-    <label for="1-star">&#9733;</label>
+    <template v-for="n in 5">
+      <input
+        type="radio"
+        :id="`${6 - n}-stars`"
+        name="rating"
+        v-model="localValue"
+        :value="6 - n"
+        :key="6 - n"
+      />
+      <label :for="`${6 - n}-stars`" :key="`l-${6 - n}`">&#9733;</label>
+    </template>
   </div>
 </template>
 

@@ -96,12 +96,7 @@ export default {
             positionName
           });
         } else {
-          this.$store.dispatch("removeFavorite", {
-            positionId,
-            player,
-            formationType,
-            positionName
-          });
+          this.$store.dispatch("removeFavorite", { player, formationType });
         }
       } else {
         console.log("Favorites only can be chosen on the pitch!");

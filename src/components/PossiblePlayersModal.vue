@@ -52,7 +52,8 @@ export default {
     Player
   },
   data: () => ({
-    sortValue: "popularity"
+    sortValue: "popularity",
+    sortChange: 0
   }),
   computed: {
     players() {
@@ -61,19 +62,18 @@ export default {
       );
     },
     sortedPlayers() {
+      this.sortChange;
       switch (this.sortValue) {
         case "popularity":
           return this.players.slice().sort((a, b) => {
             return b.rating - a.rating;
           });
-
         case "value":
           return this.players.slice().sort((a, b) => {
             a = parseInt(a.stats.value.replace(/[ €.]/g, ""));
             b = parseInt(b.stats.value.replace(/[ €.]/g, ""));
             return b - a;
           });
-
         case "age":
           return this.players.slice().sort((a, b) => {
             return b.age - a.age;
@@ -85,6 +85,7 @@ export default {
   methods: {
     changeSortValue(sortValue) {
       this.sortValue = sortValue;
+      this.sortChange++;
     }
   },
   filters: {

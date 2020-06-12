@@ -111,22 +111,21 @@ export default new Vuex.Store({
           Vue.set(formation[positionName], positionId, player);
         }
       } else {
-        Vue.set(state.favorites, formationType, {[positionName]: []});
-        Vue.set(state.favorites[formationType][positionName], positionId, player);
+        Vue.set(state.favorites, formationType, { [positionName]: [] });
+        Vue.set(
+          state.favorites[formationType][positionName],
+          positionId,
+          player
+        );
       }
-      console.log(state.favorites);
     },
-    removeFavorite: function(
-      state,
-      { positionId, player, formationType, positionName }
-    ) {
+    removeFavorite: function(state, { player, formationType }) {
       if (state.favorites[formationType]) {
-        console.log(positionId);
         const formation = state.favorites[formationType];
-        if (formation[positionName]) {
+        if (formation[player.formationPosition]) {
           Vue.delete(
-            formation[positionName],
-            formation[positionName].indexOf(player)
+            formation[player.formationPosition],
+            formation[player.formationPosition].indexOf(player)
           );
         }
       }
@@ -139,6 +138,9 @@ export default new Vuex.Store({
     },
     updatePlayerRating(state, { rating, playerId }) {
       Vue.set(state.players[playerId], "rating", parseInt(rating));
+    },
+    addPlayerFormationPosition(state, { positionName, player }) {
+      state.players[player.id].formationPosition = positionName;
     }
   },
   actions: {
@@ -160,17 +162,10 @@ export default new Vuex.Store({
         positionName
       });
       dispatch("closePossibleModal");
+      dispatch("addPlayerFormationPosition", { positionName, player });
     },
-    removeFavorite(
-      { commit },
-      { positionId, player, formationType, positionName }
-    ) {
-      commit("removeFavorite", {
-        positionId,
-        player,
-        formationType,
-        positionName
-      });
+    removeFavorite({ commit }, { player, formationType }) {
+      commit("removeFavorite", { player, formationType });
     },
     fetchData({ commit }) {
       axios({
@@ -190,6 +185,9 @@ export default new Vuex.Store({
     },
     updatePlayerRating({ commit }, { rating, playerId }) {
       commit("updatePlayerRating", { rating, playerId });
+    },
+    addPlayerFormationPosition({ commit }, { positionName, player }) {
+      commit("addPlayerFormationPosition", { positionName, player });
     }
   },
   modules: {}

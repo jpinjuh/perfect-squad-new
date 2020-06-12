@@ -18,6 +18,8 @@
 
 <script>
 import Player from "@/components/Player.vue";
+import { mapGetters } from "vuex";
+
 export default {
   data: () => ({
     //
@@ -26,12 +28,13 @@ export default {
     Player
   },
   computed: {
+    ...mapGetters(["getGks", "getDefs", "getMids", "getAtts"]),
     players() {
       return [
-        { name: "GK", players: this.$store.getters.getGks },
-        { name: "DEF", players: this.$store.getters.getDefs },
-        { name: "MID", players: this.$store.getters.getMids },
-        { name: "ATT", players: this.$store.getters.getAtts }
+        { name: "GK", players: this.getGks },
+        { name: "DEF", players: this.getDefs },
+        { name: "MID", players: this.getMids },
+        { name: "ATT", players: this.getAtts }
       ];
     }
   }

@@ -48,7 +48,6 @@ export default {
   },
   methods: {
     setItem() {
-      console.log(this.positionId);
       localStorage.setItem("positionName", this.positionName);
       localStorage.setItem("positionId", this.positionId);
     }
