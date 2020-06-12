@@ -3,17 +3,17 @@
     <div class="container container-nav">
       <div class="navbar-title">
         <div>Perfect Squad</div>
-        <a @click="dropdownToggle = !dropdownToggle" class="toggle-button">
+        <a @click="open = !open" class="toggle-button">
           <span class="bar"></span>
           <span class="bar"></span>
           <span class="bar"></span>
         </a>
       </div>
-      <ul class="navbar-links" :class="{ navToggle: dropdownToggle }">
-        <router-link tag="li" to="/"><a @click="closePopup()">Players</a></router-link>
-        <router-link tag="li" to="/favorites"><a @click="closePopup()">Favorites</a></router-link>
+      <ul class="navbar-links" :class="{ navToggle: open }">
+        <router-link tag="li" to="/"><a>Players</a></router-link>
+        <router-link tag="li" to="/favorites"><a>Favorites</a></router-link>
         <div>
-          <CustomSelect
+          <Dropdown
             name="formations"
             :title="'Formation'"
             :options="options"
@@ -26,29 +26,30 @@
 </template>
 
 <script>
-import CustomSelect from "@/components/CustomSelect.vue";
-import { formationTypes } from "@/utils/pitchPositions.js";
+import Dropdown from "@/components/Dropdown.vue";
+import { closeOnClickOutside } from "@/mixin.js";
+
 export default {
+  mixins: [closeOnClickOutside],
   data: () => ({
-    dropdownToggle: false,
-    options: formationTypes
+    open: false
   }),
   components: {
-    CustomSelect
+    Dropdown
   },
   methods: {
     selected(formationType) {
       this.$store.dispatch("changeFormation", formationType);
       localStorage.setItem("formationType", formationType);
 
-      if (this.$route.path !== "/favorites") {
+      /* if (this.$route.path !== "/favorites") {
         this.$router.push("/favorites");
-      }
-
-      this.closePopup();
-    },
-    closePopup() {
-      this.$store.dispatch("notFavoriteSelected");
+      } */
+    }
+  },
+  computed: {
+    options() {
+      return Object.keys(this.$store.getters.formations);
     }
   }
 };

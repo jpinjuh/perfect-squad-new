@@ -1,15 +1,13 @@
-$primaryColor: #232323;
-$secondaryColor: #ebebeb;
-$accentColor: #f09e00;
-$iconColor: #b7b7b7;
+$primaryColor: #232323; // main color for text and for the elements background
+$secondaryColor: #ebebeb; // secondary color for the elements background
+$accentColor: #f09e00; // accent color for active links, little details and hovers
+$iconColor: #b7b7b7; // icons and bars background color
 $playerNameColor: #292929; // color in player details modal
 $playerDetailsText: #434343; // player info color in player details modal
 $playerPositionColor: #000000;
-$progressBar: #21723a;
+$barColor: #21723a; // color of progress and scroll bar
 
 $headerHeight: 40px;
-
-$viewWidthLg: 1170px;
 
 * {
   padding: 0;
@@ -24,6 +22,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+// if modal is open disable scroll on body
 body.modal-open {
   overflow: hidden;
 }

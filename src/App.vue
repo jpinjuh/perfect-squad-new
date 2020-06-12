@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import MainLayout from "@/views/MainLayout.vue";
+import MainLayout from "@/layouts/MainLayout.vue";
 export default {
   name: "App",
   components: {
@@ -19,5 +19,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss"></style>

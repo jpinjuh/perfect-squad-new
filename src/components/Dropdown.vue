@@ -1,11 +1,11 @@
 <template>
-  <div class="select-wrapper">
-    <div class="select-title">{{ title }}:</div>
-    <div class="custom-select" @blur="open = false">
-      <div :class="[{ open: open }, 'selected']" @click="open = !open">
+  <div class="dropdown-wrapper">
+    <div class="dropdown-title">{{ title }}:</div>
+    <div class="dropdown" @blur="open = false">
+      <div class="selected" @click="open = !open">
         <i>{{ selected }}</i>
       </div>
-      <div :class="[{ selectHide: !open }, 'items']">
+      <div :class="[{ 'dropdown-hide': !open }, 'items']">
         <div
           v-for="(option, i) of options"
           :class="[{ active: option === selected }, 'item']"
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import { closeOnClickOutside } from "@/mixin.js";
+
 export default {
   props: {
     options: {
@@ -35,6 +37,7 @@ export default {
       required: true
     }
   },
+  mixins: [closeOnClickOutside],
   data: () => ({
     selected: null,
     open: false
@@ -48,16 +51,16 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/scss/_base.scss";
 
-.select-wrapper {
+.dropdown-wrapper {
   display: flex;
   align-items: center;
 }
 
-.select-title {
+.dropdown-title {
   color: $secondaryColor;
 }
 
-.custom-select {
+.dropdown {
   position: relative;
   width: 108px;
   outline: none;
@@ -96,7 +99,7 @@ export default {
   }
 }
 
-.selectHide {
+.dropdown-hide {
   display: none;
 }
 </style>

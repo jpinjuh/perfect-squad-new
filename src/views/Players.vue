@@ -28,10 +28,10 @@ export default {
   computed: {
     players() {
       return [
-        { name: "GK", players: this.$store.getters.getGks, color: "#54688e" },
-        { name: "DEF", players: this.$store.getters.getDefs, color: "#471321" },
-        { name: "MID", players: this.$store.getters.getMids, color: "#0b8227" },
-        { name: "ATT", players: this.$store.getters.getAtts, color: "#cdcf32" }
+        { name: "GK", players: this.$store.getters.getGks },
+        { name: "DEF", players: this.$store.getters.getDefs },
+        { name: "MID", players: this.$store.getters.getMids },
+        { name: "ATT", players: this.$store.getters.getAtts }
       ];
     }
   }

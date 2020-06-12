@@ -4,7 +4,9 @@
       <div class="modal-mask">
         <div class="modal-wrapper" @click="$emit('close')">
           <div class="modal-container player-details" @click.stop>
-            <div class="close-modal-btn" @click="$emit('close')"><span>x</span></div>
+            <div class="close-modal-btn" @click="$emit('close')">
+              <span>x</span>
+            </div>
             <div class="player-details-info">
               <div>
                 <div class="player-header-title">
@@ -12,12 +14,16 @@
                     >{{ player.name }} {{ player.lastName }}</span
                   >
                   <span
-                    :style="{ 'background-color': color }"
                     class="player-header-position"
+                    :class="`${stats.position}-bg-color`"
                     >{{ stats.position }}</span
                   >
                 </div>
-                <StarRating />
+                <StarRating
+                  :value="player.rating"
+                  @value-change="updateRating($event, player.id)"
+                  @player-rating="updateRating($event, player.id)"
+                />
               </div>
 
               <div>
@@ -55,6 +61,13 @@
               <div class="info-container">
                 <span>Age</span>
                 <span class="player-data">{{ player.age }}</span>
+              </div>
+
+              <div class="info-container">
+                <span>Popularity</span>
+                <span class="player-data">{{
+                  calculatePopularity(player.rating)
+                }}</span>
               </div>
 
               <div class="info-container">
@@ -103,7 +116,9 @@
                         :value="oneSkill.value"
                         max="100"
                       ></progress>
-                      <span class="player-skill-value">{{ oneSkill.value }}</span>
+                      <span class="player-skill-value">{{
+                        oneSkill.value
+                      }}</span>
                     </div>
                   </div>
                 </div>
@@ -123,10 +138,6 @@ export default {
     id: {
       type: Number,
       required: true
-    },
-    color: {
-      type: String,
-      required: true
     }
   },
   components: {
@@ -140,6 +151,13 @@ export default {
   methods: {
     bgImg(link) {
       return `background-image: url(${link});`;
+    },
+    updateRating(rating, playerId) {
+      this.$store.dispatch("updatePlayerRating", { rating, playerId });
+    },
+    calculatePopularity(rating) {
+      const popularity = (rating / 5) * 100;
+      return `${popularity}%`;
     }
   },
   filters: {
@@ -156,16 +174,17 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
+@import "@/assets/scss/_base";
 ::-webkit-scrollbar {
   width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #b7b7b7;
+  background-color: $iconColor;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color:#21723a;
+  background-color: $barColor;
 }
 </style>

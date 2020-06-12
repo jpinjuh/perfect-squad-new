@@ -1,11 +1,24 @@
 <template>
   <div class="player-container" @click.stop>
     <div class="player-panel">
-      <div class="panel-header panel-header-aside heart">&#10084;</div>
+      <div class="panel-header panel-header-aside">
+        <fa-icon
+          @click="favoritize(player)"
+          :class="[
+            { 'heart-clickable': $route.path === '/favorites' },
+            'heart'
+          ]"
+          :style="{ color: !!favorite ? 'red' : '' }"
+          icon="heart"
+        />
+      </div>
       <div class="panel-header panel-header-main" @click="toggleContent()">
         {{ player.name }} {{ player.lastName }}
       </div>
-      <div class="panel-header panel-header-aside" :style="{ color: color || '' }">
+      <div
+        class="panel-header panel-header-aside"
+        :class="`${player.stats.position}-color`"
+      >
         {{ player.stats.position }}
       </div>
     </div>
@@ -23,12 +36,7 @@
         </div>
       </div>
     </div>
-    <PlayerDetails
-      :color="color"
-      :id="player.id"
-      v-if="isOpen"
-      @close="toggleModal(isOpen)"
-    />
+    <PlayerDetails :id="player.id" v-if="isOpen" @close="toggleModal(isOpen)" />
   </div>
 </template>
 
@@ -39,9 +47,6 @@ export default {
     player: {
       type: Object,
       required: true
-    },
-    color: {
-      type: String,
     }
   },
   components: {
@@ -49,9 +54,13 @@ export default {
   },
   data: () => ({
     isVisible: false,
-    currentPlayer: null,
     isOpen: false
   }),
+  computed: {
+    favorite() {
+      return this.$store.getters.checkFavorites(this.player.id);
+    }
+  },
   methods: {
     toggleContent() {
       const panels = document.getElementsByClassName("show");
@@ -71,6 +80,31 @@ export default {
       } else {
         this.isOpen = true;
         body.classList.add("modal-open");
+      }
+    },
+    favoritize(player) {
+      if (this.$route.path === "/favorites") {
+        const positionId = localStorage.getItem("positionId"),
+          positionName = localStorage.getItem("positionName"),
+          formationType = localStorage.getItem("formationType");
+
+        if (!this.favorite) {
+          this.$store.dispatch("addFavorite", {
+            positionId,
+            player,
+            formationType,
+            positionName
+          });
+        } else {
+          this.$store.dispatch("removeFavorite", {
+            positionId,
+            player,
+            formationType,
+            positionName
+          });
+        }
+      } else {
+        console.log("Favorites only can be chosen on the pitch!");
       }
     }
   },

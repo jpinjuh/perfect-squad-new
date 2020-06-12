@@ -1,6 +1,7 @@
 /* ===PossiblePlayersModal=== */
 .possible-players {
   min-height: 100vh;
+  z-index: 9999;
   background-image: url("../perfect-squad-bg.jpg");
   background-repeat: repeat;
   background-attachment: fixed;
@@ -42,6 +43,10 @@
   }
 }
 
+.selected-tab {
+  color: rgba(38, 38, 38, 0.6);
+}
+
 .position-players {
   display: grid;
   grid-gap: 72px;
@@ -61,16 +66,22 @@
   opacity: 1 !important;
 }
 
+@media screen and (max-width: 1600px) {
+  .position-players {
+    padding-top: 120px;
+  }
+}
+
 @media screen and (max-width: 1440px) {
   .position-players {
     grid-template-columns: repeat(3, 1fr);
-    padding-top: 72px;
   }
 }
 
 @media screen and (max-width: 992px) {
   .position-players {
     grid-template-columns: repeat(2, 1fr);
+    padding-top: 72px;
   }
 }
 
@@ -248,13 +259,27 @@
   }
 }
 
+// background color for positions name
+.GK-bg-color {
+  background-color: #54688e;
+}
+.CB-bg-color, .LB-bg-color, .RB-bg-color, .DEF-bg-color {
+  background-color: #471321;
+}
+.DM-bg-color, .CM-bg-color, .LM-bg-color, .RM-bg-color, .AM-bg-color {
+  background-color: #0b8227;
+}
+.CF-bg-color, .LW-bg-color, .RW-bg-color {
+  background-color: #cdcf32;
+}
+
 /* skill value with progress bar */ 
 progress {
   height: 6px;
-  background-color: $progressBar;
+  background-color: $barColor;
 }
 progress::-webkit-progress-bar {
-  background-color: #b7b7b7;
+  background-color: $iconColor;
 }
 
 @media (max-width: 1919px) {
@@ -269,8 +294,8 @@ progress::-webkit-progress-bar {
 
 @media (max-width: 1200px) {
   .modal-container {
-    width: calc(1200px * 0.75);
-    height: calc(800px * 0.75);
+    width: calc(1200px * 0.80);
+    height: calc(800px * 0.80);
     padding: 40px;
   }
   .player-skill-name {
@@ -411,7 +436,24 @@ progress::-webkit-progress-bar {
 .heart {
   color: $iconColor;
   font-size: 22px;
+}
+// is heart icon clickable 
+.heart-clickable {
   cursor: pointer;
+}
+
+// color for positions name
+.GK-color {
+  color: #54688e;
+}
+.CB-color, .LB-color, .RB-color, .DEF-color {
+  color: #471321;
+}
+.DM-color, .CM-color, .LM-color, .RM-color, .AM-color {
+  color: #0b8227;
+}
+.CF-color, .LW-color, .RW-color {
+  color: #cdcf32;
 }
 
 /* ===Players=== */
@@ -448,11 +490,12 @@ progress::-webkit-progress-bar {
 
 /* ===PitchPlayer=== */
 .pitch-circle {
-  position: absolute;
+  position: relative;
   width: 30px;
   height: 30px;
   border-radius: 50%;
   cursor: pointer;
+  margin: 0 30px;
   background-color: $primaryColor;
   border: 1px solid $accentColor;
   &-popover {
@@ -462,6 +505,11 @@ progress::-webkit-progress-bar {
     left: 50%;
     max-width: 1000px;
     transform: translate(-50%, -50%);
+    div {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+    }
   }
 }
 
@@ -472,13 +520,51 @@ progress::-webkit-progress-bar {
     height: 89px;
     border-radius: 50%;
     background-size: cover;
-    background-color: #b3b3b3;
+    display: flex;
+    align-self: center;
+    background-color: $secondaryColor;
     cursor: pointer;
   }
   &-name {
-    background-color: rgb(201, 201, 201);
+    background-color:$secondaryColor;
     font-size: 14px;
     text-align: center;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 1600px) {
+  .pitch-img {
+    width: 65px;
+    height: 65px;
+  }
+  .pitch-circle {
+    margin: 0 25px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .pitch-img {
+    width: 55px;
+    height: 55px;
+  }
+}
+
+@media (max-width: 768px) {
+  .pitch-name {
+    font-size: 12px;
+  }
+  .pitch-circle {
+    width: 24px;
+    height: 24px;
+    margin: 0 20px
+  }
+}
+
+@media (max-width: 480px) {
+  .pitch-circle {
+    width: 20px;
+    height: 20px;
   }
 }
 
@@ -502,76 +588,104 @@ progress::-webkit-progress-bar {
   justify-content: center;
   align-items: center;
   padding: 56px 50px;
-}
-
-.pitch {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-@media (max-width: 1919px) {
-  .pitch-container {
+  @media (max-width: 1919px) {
     width: calc(607px * 0.75);
     height: calc(868px * 0.75);
     padding: 42px 38px;
   }
-}
-
-@media (max-width: 1200px) {
-  .pitch-container {
+  @media (max-width: 1200px) {
     width: calc(607px * 0.70);
     height: calc(868px * 0.70);
     padding: 38px 32px;
   }
-}
-
-@media (max-width: 768px) {
-  .pitch-container {
+  @media (max-width: 768px) {
     width: calc(607px * 0.65);
     height: calc(868px * 0.65);
     padding: 36px 30px;
   }
-}
-
-@media (max-width: 480px) {
-  .pitch-container {
+  @media (max-width: 480px) {
     width: calc(607px * 0.60);
     height: calc(868px * 0.60);
     padding: 34px 26px;
   }
 }
 
+.pitch {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+}
+
+.pitch > div {
+  position: absolute;
+  display: flex;
+  align-items: flex-end;
+  height: 30px;
+}
+
+.gk {
+  bottom: 1%;
+  width: 100%;
+  justify-content: center;
+}
+.cb {
+  bottom: 16%;
+  width: 100%;
+  justify-content: center;
+}
+.lb {
+  bottom: 26%;
+}
+.rb {
+  bottom: 26%;
+  left: 80%;
+}
+.dm {
+  bottom: 33%;
+  width: 100%;
+  justify-content: center;
+}
+.cm {
+  bottom: 48%;
+  width: 100%;
+  justify-content: center;
+}
+.am {
+  bottom: 62%;
+  width: 100%;
+  justify-content: center;
+  z-index: 1;
+}
+.lm {
+  bottom: 62%;
+  z-index: 2;
+}
+.rm {
+  bottom: 62%;
+  left: 78%;
+  z-index: 2;
+}
+.lw {
+  bottom: 73%;
+}
+.rw {
+  bottom: 73%;
+  left: 78%;
+}
+.cf {
+  bottom: 80%;
+  width: 100%;
+  justify-content: center;
+}
+
 /* ===Navbar=== */
-.container {
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
-  @media screen and (max-width: 480px) {
-    width: 100%;
-  }
-  @media screen and (min-width: 768px) {
-    width: 750px;
-  }
-  @media screen and (min-width: 992px) {
-    width: 970px;
-  }
-  @media screen and (min-width: 1200px) {
-    width: 1170px;
-  }
-  @media screen and (min-width: 1440px) {
-    width: 1300px;
-  }
-  @media screen and (min-width: 1920px) {
-    width: 1620px;
-  }
-  &-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; // *
-    flex-direction: row; // *
-  }
+
+.container-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; // *
+  flex-direction: row; // *
 }
 
 .navbar {
@@ -665,7 +779,7 @@ progress::-webkit-progress-bar {
 }
 
 .star-rating label {
-  color:#b7b7b7;
+  color:$iconColor;
   cursor:pointer;
 }
 
@@ -675,5 +789,5 @@ progress::-webkit-progress-bar {
 
 .star-rating label:hover,
 .star-rating label:hover ~ label {
-  color:#f0c106;
+  color:$accentColor
 }
